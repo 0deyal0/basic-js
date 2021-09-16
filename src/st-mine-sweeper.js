@@ -23,7 +23,12 @@ import { NotImplementedError } from '../extensions/index.js';
  *  [1, 1, 1]
  * ]
  */
-export default function minesweeper (/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+export default function minesweeper (matrix) {
+  return matrix.map((valRow, indRow, arrRow) => {
+    return valRow.map((valCol, indCol, arrCol) =>{
+      return matrix.filter((_, ind) => [indRow-1, indRow, indRow+1].includes(ind))
+      .map(curVal => curVal.filter((_, ind) => [indCol-1, indCol, indCol+1].includes(ind)))        
+      .reduce((acc, val) => acc+=val.reduce((acc, val) => acc + Number(val), 0 ), 0) - Number(valCol);
+    });
+  });
 }

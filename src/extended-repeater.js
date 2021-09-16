@@ -15,7 +15,25 @@ import { NotImplementedError } from '../extensions/index.js';
  * => 'STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS'
  *
  */
-export default function repeater(/* str, options */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+export default function repeater(str, options) {
+  let parsedOptions = parseOptions(options);
+  if (parsedOptions == null) return str;
+  let addition = parsedOptions.additionRepeatTimes != 0 ?
+          (new Array(parsedOptions.additionRepeatTimes)).fill(parsedOptions.addition).join(parsedOptions.additionSeparator) : '';
+            
+   return (new Array(parsedOptions.repeatTimes)).fill(String(str)+addition).join(parsedOptions.separator);
+  
+}
+
+function parseOptions(options)
+{
+  let resOptions = {}
+  resOptions.repeatTimes = 'repeatTimes' in options && options.repeatTimes !== undefined ? options.repeatTimes : 1;
+  resOptions.separator = 'separator' in options && options.separator !== undefined ? String(options.separator) : '+';
+  resOptions.addition = 'addition' in options && options.addition !== undefined ? String(options.addition) : '';
+  resOptions.additionSeparator = 'additionSeparator' in options && options.additionSeparator !== undefined ? String(options.additionSeparator) : '|';
+  resOptions.additionRepeatTimes = 'additionRepeatTimes' in options && options.additionRepeatTimes !== undefined ? 
+                                      options.additionRepeatTimes : 1;
+  
+  return resOptions;
 }
