@@ -20,7 +20,7 @@ export default function renameFiles(names) {
     if (acc.includes(`${val}`)){
       let k = acc.filter(curVal => curVal == val || curVal.match(`${val}\\(\\d+\\)$`) != null)
                    .reduce((acc, redVal) => {
-                     const match = redVal == val ? '0' : redVal.match(/\(\d+\)$/)?.[0] || '0';
+                     const match = redVal == val ? '0' : redVal.match(/\(\d+\)$/) ? redVal.match(/\(\d+\)$/)[0] : '0';
                      return Math.max(match.substring(1, match.length-1), acc);
                    }, 0);
       k++;
